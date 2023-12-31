@@ -12,7 +12,7 @@
   "private": true,
   "scripts": {
     "start": "wrangler dev",
-    "deploy": "wrangler publish",
+    "deploy": "wrangler deploy",
     "test": "vitest run",
     "lint": "biome lint ./src",
     "fmt": "biome format ./src",
