@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { basicAuth } from 'hono/basic-auth'
 import { serveStatic } from 'hono/cloudflare-workers'
+import { Index } from './views/pages/index'
 
 type Bindings = {
   USERNAME: string
@@ -20,6 +21,7 @@ app.use('*', async (c, next) => {
   return auth(c, next)
 })
 
+// Static File
 app.get('/static/*', serveStatic({ root: './' }))
 
 // API
@@ -64,6 +66,9 @@ app.get('/api/sent_logs', async (c) => {
   return c.json({ sent_logs: sentLogs })
 })
 
-app.get('/', (c) => c.text('Hello World!'))
+// トップページ
+app.get('/', (c) => {
+  return c.html(Index())
+})
 
 export default app
