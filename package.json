@@ -12,12 +12,14 @@
   "private": true,
   "scripts": {
     "start": "wrangler dev",
-    "deploy": "wrangler deploy",
+    "dev": "wrangler dev src/index.ts",
+    "deploy": "wrangler deploy --minify src/index.ts",
     "test": "vitest run",
     "lint": "biome lint ./src",
     "fmt": "biome format ./src",
     "fix": "biome check --apply ./src",
-    "fix:unsafe": "biome check --apply-unsafe ./src"
+    "fix:unsafe": "biome check --apply-unsafe ./src",
+    "postinstall": "husky install"
   },
   "dependencies": {
     "hono": "^3.11.11"

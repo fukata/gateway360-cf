@@ -38,7 +38,8 @@ describe('Worker', () => {
     })
     if (resp) {
       const text = await resp.text()
-      expect(text).toMatchInlineSnapshot(`"Hello World!"`)
+      // <title>Gateway 360</title> が含まれていることを確認する
+      expect(text).toContain('<title>Gateway 360</title>')
     }
   })
 })
