@@ -21,9 +21,7 @@ export const Layout = (props: { title?: string; children?: any }) => {
             <Sidebar />
           </aside>
 
-          <main style={contentStyle}>
-            {props.children}
-          </main>
+          <main style={contentStyle}>{props.children}</main>
         </div>
       </body>
     </html>
@@ -57,7 +55,15 @@ const contentBackgroundColor = '#333'
 const htmlStyle = {
   margin: 0,
   padding: 0,
-  fontFamily: ["Helvetica Neue", "Arial", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans", "Meiryo", "sans-serif"],
+  fontFamily: [
+    'Helvetica Neue',
+    'Arial',
+    'Hiragino Kaku Gothic ProN',
+    'Hiragino Sans',
+    'Noto Sans',
+    'Meiryo',
+    'sans-serif',
+  ],
   fontSize: '16px',
   lineHeight: '1.5',
   color: baseColor,

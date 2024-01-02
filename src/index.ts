@@ -1,7 +1,9 @@
 import { Hono } from 'hono'
 import { basicAuth } from 'hono/basic-auth'
 import { serveStatic } from 'hono/cloudflare-workers'
-import { Index } from './views/pages/index'
+import { renderToReadableStream } from 'hono/jsx/streaming'
+import { getReceivedLogs } from './api'
+import { ReceivedLogs } from './views/pages/received-logs'
 
 type Bindings = {
   USERNAME: string
@@ -56,7 +58,7 @@ app.post('/api/events/:eventId/received_logs', async (c) => {
 
 // すべてのイベントに対する受信ログを返す
 app.get('/api/received_logs', async (c) => {
-  const receivedLogs = []
+  const receivedLogs = getReceivedLogs()
   return c.json({ received_logs: receivedLogs })
 })
 
@@ -68,7 +70,17 @@ app.get('/api/sent_logs', async (c) => {
 
 // トップページ
 app.get('/', (c) => {
-  return c.html(Index())
+  return c.redirect('/received_logs')
+})
+
+app.get('/received_logs', (c) => {
+  const stream = renderToReadableStream(ReceivedLogs())
+  return c.body(stream, {
+    headers: {
+      'Content-Type': 'text/html; charset=UTF-8',
+      'Transfer-Encoding': 'chunked',
+    },
+  })
 })
 
 export default app
